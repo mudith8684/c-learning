@@ -78,6 +78,7 @@ int main () {
         temp = temp->next;
     }
     printf("The sum of the elements is: %d\n", sum);
+    // freeing entire list using temp
     temp = head;
     while (temp != NULL) {
         struct Node *next = temp->next;

@@ -125,7 +125,7 @@ int main () {
     head = insert_end(head, 50);
     traversal_sll(head);
     head = insert_position(head, 15, 3);
-    traversal(head);
+    traversal_sll(head);
     temp = head;
     while (temp != NULL) {
         struct Node *next = temp->next;

@@ -12,7 +12,7 @@ struct Node {
 };
 
 struct Node* createNode (int data) {
-    struct Node *newNode = (struct Node*) malloc (sizeof(struct Node));
+    struct Node *newNode = malloc (sizeof(struct Node));
     if (newNode == NULL) {
         printf("Memory allocation failed!\n");
         return NULL;
@@ -71,15 +71,18 @@ int main () {
     printf("The length of this singly linked list is: %d\n", length);
     search_sll(head, 30);
     search_sll(head, 100);
+    struct Node *temp = head;
     int sum = 0;
-    while (head != NULL) {
-        sum += head->data;
-        head = head->next;
+    while (temp != NULL) {
+        sum += temp->data;
+        temp = temp->next;
     }
     printf("The sum of the elements is: %d\n", sum);
-    free(head->next->next->next);
-    free(head->next->next);
-    free(head->next);
-    free(head);
+    temp = head;
+    while (temp != NULL) {
+        struct Node *next = temp->next;
+        free(temp);
+        temp = next;
+    }
     return 0;
 }

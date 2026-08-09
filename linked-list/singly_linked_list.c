@@ -45,10 +45,10 @@ int length_sll (struct Node *head) {
 // 4. Searching in SLL
 void search_sll (struct Node *head, int key) {
     struct Node *temp = head;
-    int count = 1, found = 0;
+    int count = 0, found = 0;
     while (temp != NULL) {
         if (temp->data == key) {
-            printf("Element %d found at position %d.\n", temp->data, count);
+            printf("Element %d found at position %d.\n", temp->data, count + 1);
             found = 1;
         }
         count++;
@@ -73,7 +73,7 @@ struct Node* insert_end (struct Node *head, int data) {
         return temp;
     }
     struct Node *cur = head;
-    while (cur != NULL) {
+    while (cur->next != NULL) {
         cur = cur->next;
     }
     cur->next = temp;
@@ -124,7 +124,7 @@ int main () {
     traversal_sll(head);
     head = insert_end(head, 50);
     traversal_sll(head);
-    head = insert_position(head, 15, 3);
+    head = insert_position(head, 15, 2);
     traversal_sll(head);
     temp = head;
     while (temp != NULL) {

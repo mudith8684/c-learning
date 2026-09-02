@@ -11,6 +11,26 @@ struct Node {
     struct Node *next;
 };
 
+struct Node* create_list () {
+    int n, key;
+    struct Node *head = NULL, *temp = NULL;
+    printf("Enter number of elements/nodes: ");
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        printf("Enter element %d: ", i);
+        scanf("%d", &key);
+        struct Node* newNode = createNode(key);
+        if (head == NULL) {
+            head = newNode;
+            temp = newNode;
+        } else {
+            temp->next = newNode;
+            temp = newNode;
+        }
+    }
+    return head;
+}
+
 struct Node* createNode (int data) {
     struct Node *newNode = malloc (sizeof(struct Node));
     if (newNode == NULL) {
@@ -43,94 +63,197 @@ int length_sll (struct Node *head) {
 }
 
 // 4. Searching in SLL
-void search_sll (struct Node *head, int key) {
+int search_sll (struct Node *head, int key) {
     struct Node *temp = head;
-    int count = 0, found = 0;
+    int count = 1;
     while (temp != NULL) {
         if (temp->data == key) {
-            printf("Element %d found at position %d.\n", temp->data, count + 1);
-            found = 1;
+            return count;
         }
         count++;
         temp = temp->next;
     }
-    if (!found) {
-        printf("Element %d not found.\n", key);
-    }
+    return -1;
 }
 
 // Inserting a node
 struct Node* insert_beginning (struct Node *head, int data) {
-    struct Node *temp = createNode(data);
-    temp->next = head;
-    head = temp;
+    struct Node *newNode = createNode(data);
+    newNode->next = head;
+    head = newNode;
     return head;
 }
 
 struct Node* insert_end (struct Node *head, int data) {
-    struct Node *temp = createNode(data);
+    struct Node *newNode = createNode(data);
     if (head == NULL) {
-        return temp;
+        return newNode;
     }
-    struct Node *cur = head;
-    while (cur->next != NULL) {
-        cur = cur->next;
+    struct Node *temp = head;
+    while (temp->next != NULL) {
+        temp = temp->next;
     }
-    cur->next = temp;
+    temp->next = newNode;
     return head;
 }
 
-struct Node* insert_position(struct Node* head, int data, int pos) {
-    struct Node* temp = createNode(data);
-    if (pos == 0) {
-        temp->next = head;
-        return temp;
+struct Node* insert_position (struct Node* head, int data, int pos) {
+    struct Node* newNode = createNode(data);
+    if (pos == 1) {
+        newNode->next = head;
+        return newNode;
     }
-    struct Node* cur = head;
-    for (int i = 0; i < pos - 1 && cur != NULL; i++) {
-        cur = cur->next;
+    struct Node* temp = head;
+    for (int i = 1; i < pos - 1 && temp != NULL; i++) {
+        temp = temp->next;
     }
-    if (cur == NULL) {
-        free(temp);
+    if (temp == NULL) {
+        free(newNode);
         printf("Position out of bounds.\n");
         return head;
     }
-    temp->next = cur->next;
-    cur->next = temp;
+    newNode->next = temp->next;
+    temp->next = temp;
     return head;
+}
+
+// Deleting a node
+struct Node* delete_beginning (struct Node* head) {
+    if (head == NULL) {
+        return head; // NULL
+    }
+    struct Node* temp = head;
+    head = head->next;
+    free(temp);
+    return head;
+}
+
+struct Node* delete_end (struct Node* head) {
+    if (head == NULL) {
+        return head; // NULL
+    }
+    if (head->next == NULL) {
+        free(head);
+        head = NULL;
+        return head;
+    }
+    struct Node* temp = head;
+    while (temp->next->next != NULL) {
+        temp = temp->next;
+    }
+    free(temp->next);
+    temp->next = NULL;
+    return head;
+}
+
+struct Node* delete_position (struct Node* head, int pos) {
+    if (head == NULL || pos < 1) {
+        return head;
+    }
+    if (pos == 1) {
+        struct Node* temp = head;
+        head = head->next;
+        free(temp);
+        return head;
+    }
+    struct Node* temp = head;
+    for (int i = 1; i < pos - 1 && temp->next != NULL; i++) {
+        temp = temp->next;
+    }
+    if (temp->next == NULL) {
+        return head;
+    }
+    struct Node* temp2 = temp->next;
+    temp->next = temp2->next;
+    free(temp2);
+    return head;
+} // temp2 is the node being deleted. Use deleteNode later. 
+
+// Search by position
+struct Node* get_node_by_position (struct Node* head, int pos) {
+    if (head == NULL || pos < 1) {
+        return NULL;
+    }
+    struct Node* temp = head;
+    int count = 1;
+    while (temp != NULL && count < pos) {
+        temp = temp->next;
+        count++;
+    }
+    return temp;
+}
+
+// Find first position of the key
+int find_first_position (struct Node* head, int key) {
+    struct Node* temp = head;
+    int position = 1;
+    while (temp != NULL) {
+        if (temp->data == key) {
+            return position;
+        }
+        temp = temp->next;
+        position++;
+    }
+    return -1;
+}
+
+void display_menu() {
+    printf("\nSingly Linked List Menu\n");
+    printf("1. Display List\n");
+    printf("2. Find Length\n");
+    printf("3. Search by Value\n");
+    printf("4. Search by Position\n");
+    printf("5. Insert at Beginning\n");
+    printf("6. Insert at End\n");
+    printf("7. Insert at Position\n");
+    printf("8. Delete Beginning\n");
+    printf("9. Delete End\n");
+    printf("10. Delete at Position\n");
+    printf("11. Exit\n");
+    printf("Enter choice: ");
 }
 
 int main () {
     printf("Singly Linked List\n");
-    struct Node *head = NULL;
-    head = createNode(10);
-    head->next = createNode(20);
-    head->next->next = createNode(30);
-    head->next->next->next = createNode(40);
-    traversal_sll(head); // print list
-    int length = length_sll(head);
-    printf("The length of this singly linked list is: %d\n", length);
-    search_sll(head, 30);
-    search_sll(head, 100);
-    struct Node *temp = head;
-    int sum = 0;
-    while (temp != NULL) {
-        sum += temp->data;
-        temp = temp->next;
-    }
-    printf("The sum of the elements is: %d\n", sum);
-    // freeing entire list using temp
-    head = insert_beginning(head, 5);
+    struct Node* head = create_list();
+    printf("\nLinked list created successfully!\n");
+    printf("List: ");
     traversal_sll(head);
-    head = insert_end(head, 50);
-    traversal_sll(head);
-    head = insert_position(head, 15, 2);
-    traversal_sll(head);
-    temp = head;
-    while (temp != NULL) {
-        struct Node *next = temp->next;
-        free(temp);
-        temp = next;
-    }
+    int choice;
+    do {
+        display_menu();
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1: {
+                printf("List: ");
+                traversal_sll(head);
+                printf("\n");
+                break;
+            }
+            case 2: {
+                printf("Length: %d\n", length_sll(head));
+                break;
+            }
+            case 3: {
+                int key;
+                printf("Enter value to search: ");
+                scanf("%d", &key);
+                int position = search_sll(head, key);
+                if (position != -1) {
+                    printf("Element found at position %d.\n", position);
+                } else {
+                    printf("Element not found.\n");
+                }
+                break;
+            }
+            case 11: {
+                printf("Exiting...");
+                break;
+            }
+            default: {
+                printf("Invalid choice. Please try again.\n");
+            }
+        }
+    } while (choice != 11);
     return 0;
 }

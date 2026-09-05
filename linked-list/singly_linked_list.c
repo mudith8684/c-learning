@@ -246,7 +246,74 @@ int main () {
                 }
                 break;
             }
+            case 4: {
+                int pos;
+                printf("Enter position to search at: ");
+                scanf("%d", &pos);
+                struct Node* result = get_node_by_position(head, pos);
+                if (result != NULL) {
+                    printf("Element at position %d: %d\n", pos, result->data);
+                } else {
+                    printf("Invalid position.\n");
+                }
+                break;
+            }
+            case 5: {
+                int key;
+                printf("Enter value of key to find first position of itself: ");
+                int position = find_first_position(head, key);
+                if (position != -1) {
+                    printf("First occurence of %d is at position %d.\n", key, position);
+                } else {
+                    printf("%d not found in the list.\n", key);
+                }
+                break;
+            }
+            case 6: {
+                int data;
+                printf("Enter data to insert at beginning: ");
+                scanf("%d", &data);
+                head = insert_beginning(head, data);
+                printf("Node inserted at beginning.\n");
+                break;
+            }
+            case 7: {
+                int data;
+                printf("Enter data to insert at end: ");
+                scanf("%d", &data);
+                head = insert_end(head, data);
+                printf("Node inserted at end.\n");
+                break;
+            }
+            case 8: {
+                int data, pos;
+                printf("Enter data to enter: ");
+                scanf("%d", &data);
+                printf("Enter position of the data: ");
+                scanf("%d", &pos);
+                head = insert_position(head, data, pos);
+                printf("Insertion operation completed.\n");
+                break;
+            }
+            case 9: {
+                head = delete_beginning(head);
+                printf("Deletion from beginning completed.\n");
+                break;
+            }
+            case 10: {
+                head = delete_end(head);
+                printf("Deletion from end completed.\n");
+                break;
+            }
             case 11: {
+                int pos;
+                printf("Enter position to delete: ");
+                scanf("%d", &pos);
+                head = delete_position(head, pos);
+                printf("Deletion operation completed.\n");
+                break;
+            }
+            case 12: {
                 printf("Exiting...");
                 break;
             }
@@ -254,6 +321,12 @@ int main () {
                 printf("Invalid choice. Please try again.\n");
             }
         }
-    } while (choice != 11);
+    } while (choice != 12);
+    struct Node* temp = head;
+    while (temp != NULL) {
+        struct Node* next = temp->next;
+        free(temp);
+        temp = next;
+    }
     return 0;
 }

@@ -262,6 +262,7 @@ int main () {
             case 5: {
                 int key;
                 printf("Enter value of key to find first position of itself: ");
+                scanf("%d", &key);
                 int position = find_first_position(head, key);
                 if (position != -1) {
                     printf("First occurence of %d is at position %d.\n", key, position);

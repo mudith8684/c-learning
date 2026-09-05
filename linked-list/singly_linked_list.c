@@ -203,13 +203,14 @@ void display_menu() {
     printf("2. Find Length\n");
     printf("3. Search by Value\n");
     printf("4. Search by Position\n");
-    printf("5. Insert at Beginning\n");
-    printf("6. Insert at End\n");
-    printf("7. Insert at Position\n");
-    printf("8. Delete Beginning\n");
-    printf("9. Delete End\n");
-    printf("10. Delete at Position\n");
-    printf("11. Exit\n");
+    printf("5. Find first position\n");
+    printf("6. Insert at Beginning\n");
+    printf("7. Insert at End\n");
+    printf("8. Insert at Position\n");
+    printf("9. Delete Beginning\n");
+    printf("10. Delete End\n");
+    printf("11. Delete at Position\n");
+    printf("12. Exit\n");
     printf("Enter choice: ");
 }
 

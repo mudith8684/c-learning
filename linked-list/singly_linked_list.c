@@ -113,7 +113,7 @@ struct Node* insert_position (struct Node* head, int data, int pos) {
         return head;
     }
     newNode->next = temp->next;
-    temp->next = temp;
+    temp->next = newNode;
     return head;
 }
 

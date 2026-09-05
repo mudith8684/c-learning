@@ -11,6 +11,17 @@ struct Node {
     struct Node *next;
 };
 
+struct Node* createNode (int data) {
+    struct Node *newNode = malloc (sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed!\n");
+        return NULL;
+    }
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
 struct Node* create_list () {
     int n, key;
     struct Node *head = NULL, *temp = NULL;
@@ -29,17 +40,6 @@ struct Node* create_list () {
         }
     }
     return head;
-}
-
-struct Node* createNode (int data) {
-    struct Node *newNode = malloc (sizeof(struct Node));
-    if (newNode == NULL) {
-        printf("Memory allocation failed!\n");
-        return NULL;
-    }
-    newNode->data = data;
-    newNode->next = NULL;
-    return newNode;
 }
 
 // 2. Traversal of SLL

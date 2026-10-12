@@ -61,3 +61,34 @@ NODE insertEnd (NODE head, int data) {
     }
     return head;
 }
+
+NODE insertPosition (NODE head, int data, int position) {
+    NODE newNode = createNode (data);
+    if (head == NULL || position == 1) {
+        if (head == NULL) {
+            head = newNode;
+            return head;
+        }
+        NODE temp = head;
+        while (temp->next != head) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        newNode->next = head;
+        head = newNode;
+        return head;
+    }
+    NODE cur = head;
+    int i = 1;
+    for (; i < position - 1 && cur->next != head; i++) {
+        cur = cur->next;
+    }
+    if (cur->next == head && i < position - 1) {
+        printf("Position out of bounds.\n");
+        free (newNode);
+        return head;
+    }
+    newNode->next = cur->next;
+    cur->next = newNode;
+    return head;
+}

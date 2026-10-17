@@ -115,6 +115,7 @@ int main(void) {
             }
             case 0: {
                 printf("Exiting...");
+                freeQueue();
                 return 0;
             }
             default: {
@@ -122,5 +123,6 @@ int main(void) {
             }
         }
     } while(choice != 0);
+    freeQueue();
     return 0;
 }

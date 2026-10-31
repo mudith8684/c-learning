@@ -20,44 +20,44 @@ NODE createNode (int data) {
 }
 
 NODE insertBeginning (NODE head, int data) {
-    NODE temp = createNode(data);
-    NODE cur;
-    if (temp == NULL) {
-        printf("malloc failed for temp.\n");
+    NODE newNode = createNode(data);
+    NODE temp;
+    if (newNode == NULL) {
+        printf("malloc failed.\n");
         return head;
     }
     if (head == NULL) {
-        head = temp;
-        temp->next = head;
+        head = newNode;
+        newNode->next = head;
     } else {
-        temp->next = head;
-        cur = head;
-        while (cur->next != head) {
-            cur = cur->next;
+        newNode->next = head;
+        temp = head;
+        while (temp->next != head) {
+            temp = temp->next;
         }
-        cur->next = temp;
-        head = temp;
+        temp->next = newNode;
+        head = newNode;
     }
     return head;
 }
 
 NODE insertEnd (NODE head, int data) {
-    NODE temp = createNode (data);
-    NODE cur;
-    if (temp == NULL) {
-        printf("malloc failed for temp.\n");
+    NODE newNode = createNode (data);
+    NODE temp;
+    if (newNode == NULL) {
+        printf("malloc failed for newNode.\n");
         return head;
     }
     if (head == NULL) {
-        head = temp;
-        temp->next = head;
+        head = newNode;
+        newNode->next = head;
     } else {
-        cur = head;
-        while (cur->next != head) {
-            cur = cur->next;
+        temp = head;
+        while (temp->next != head) {
+            temp = temp->next;
         }
-        cur->next = temp;
-        temp->next = head;
+        temp->next = newNode;
+        newNode->next = head;
     }
     return head;
 }
@@ -90,5 +90,40 @@ NODE insertPosition (NODE head, int data, int position) {
     }
     newNode->next = cur->next;
     cur->next = newNode;
+    return head;
+}
+
+NODE deleteBeginning(NODE head) {
+    if(head == NULL) {
+        return head;
+    }
+    if(head->next == head) {
+        free(head);
+        return NULL;
+    }
+    NODE cur = head, temp = head;
+    while(cur->next != head) {
+        cur = cur->next;
+    }
+    head = head->next;
+    cur->next = head;
+    free(temp);
+    return head;
+}
+
+NODE deleteEnd(NODE head) {
+    if(head == NULL) {
+        return head;
+    } else if(head->next == NULL) {
+        free(head);
+        return NULL;
+    }
+    NODE cur = head, temp = NULL;
+    while(cur->next->next != head) {
+        cur = cur->next;
+    }
+    temp = cur->next;
+    cur->next = head;
+    free(temp);
     return head;
 }

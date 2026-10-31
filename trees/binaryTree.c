@@ -121,3 +121,60 @@ void postOrderTraversal(NODE root) {
         }
     } while(top != -1);
 }
+
+// BFS Traversal to be added
+
+int search(NODE root, int element) {
+    static int t = 0;
+    if(root) {
+        if(root->data == element) {
+            t++;
+            return t;
+        }
+        if(t == 0) {
+            search(root->lchild, element);
+        }
+        if(t == 0) {
+            search(root->rchild, element);
+        }
+    }
+}
+
+NODE copy(NODE root) {
+    if(root == NULL) {
+        return NULL;
+    }
+    NODE temp = getNode();
+    temp->data = root->data;
+    temp->lchild = copy(root->lchild);
+    temp->rchild = copy(root->rchild);
+    return temp;
+}
+
+int countNodes(NODE root) {
+    static int count = 0;
+    if(root != NULL) {
+        countNodes(root->lchild);
+        count++;
+        countNodes(root->rchild);
+    }
+    return count;
+}
+
+int countLeafNodes(NODE root) {
+    static int count = 0;
+    if(root != NULL) {
+        if(root->lchild == NULL && root->rchild == NULL) {
+            count++;
+        }
+        countLeafNodes(root->lchild);
+        countLeafNodes(root->rchild);
+    }
+    return count;
+}
+
+int isEqual(NODE root1, NODE root2) {
+    return ((!root1 && !root2) || 
+        (root1 && root2 && (root1->data == root2->data) && 
+        isEqual(root1->lchild, root2->lchild) && isEqual(root1->rchild, root2->rchild)));
+}

@@ -178,3 +178,90 @@ int isEqual(NODE root1, NODE root2) {
         (root1 && root2 && (root1->data == root2->data) && 
         isEqual(root1->lchild, root2->lchild) && isEqual(root1->rchild, root2->rchild)));
 }
+
+void displayList() {
+    printf("\nBinary Tree\n1. Create Tree\n2. Preorder Traversal (recursive)\n3. Inorder Traversal (recursive)\n4. Postorder Traversal (recursive)\n5. Preorder Traversal (iterative)\n6. Inorder Traversal (iterative)\n7. Postorder Traversal (iterative)\n8. Search an element\n9. Count Nodes\n10. Count Leaf Nodes\n11. Check if two trees are equal\nEnter your choice: ");
+}
+
+int main() {
+    int choice, value;
+    NODE root, root1, root2;
+    do {
+        displayList();
+        if(scanf("%d", &choice) != 1) {
+            printf("Invalid input.\n");
+            return 1;
+        }
+        switch(choice) {
+            case 1: {
+                printf("Enter root value: ");
+                if(scanf("%d", &value) != 1) {
+                    printf("Invalid input.\n");
+                    return 1;
+                }
+                root = createTree(value);
+                break;
+            }
+            case 2: {
+                preorderTraversal(root);
+                break;
+            }
+            case 3: {
+                inorderTraversal(root);
+                break;
+            }
+            case 4: {
+                postorderTraversal(root);
+                break;
+            }
+            case 5: {
+                preOrderTraversal(root);
+                break;
+            }
+            case 6: {
+                inOrderTraversal(root);
+                break;
+            }
+            case 7: {
+                postOrderTraversal(root);
+                break;
+            }
+            case 8: {
+                printf("Enter element to search: ");
+                if(scanf("%d", &value) != 1){
+                    printf("Invalid input.\n");
+                    return 1;
+                }
+                search(root, value);
+                break;
+            }
+            case 9: {
+                value = countNodes(root);
+                printf("Number of nodes: %d\n", value);
+                break;
+            }
+            case 10: {
+                value = countLeafNodes(root);
+                printf("Number of leaf nodes: %d\n", value);
+                break;
+            }
+            case 11: {
+                if(isEqual(root1, root2)) {
+                    printf("Both trees are equal.\n");
+                } else {
+                    printf("Both trees are not equal.\n");
+                }
+                break;
+            }
+            // copy function
+            default: {
+                printf("Invalid input.\n");
+            }
+        }
+    } while(choice != 0);
+    return 0;
+}
+
+// add exit option in do-while loop
+// fix rchild bug
+// add copy function in do-while loop

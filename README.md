@@ -20,5 +20,6 @@ c-learning/
 ├── projects/       # Small end-to-end C console programs 
 ├── queues/         # Queue implementations & practice problems
 ├── stacks/         # Stack implementations & applications
+│   └── array-stack/                   # stack.h, stack.c, main.c
 ├── trees/          # Binary trees, traversals, and tree operations
 └── README.md
